@@ -5,4 +5,3 @@ export interface Task {
     order: number
 }
 
-export let taskList: Task[] = [];

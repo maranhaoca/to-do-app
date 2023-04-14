@@ -1,29 +1,40 @@
 import { Task } from "./domain/task";
-import { save } from "./useCases/saveTask/save";
+import { loadTasks, saveTasks } from "./useCases/saveTask/saveLoad.js";
 
-const taskApp = document.querySelector(".task-app");
-const taskInput = document.querySelector('.task')
-const taskList = document.querySelector('.task-list')
+const taskForm = document.querySelector<HTMLUListElement>("#new-task-form")
+const taskInput = document.getElementById("new-task-title") as HTMLFormElement
+const taskList = document.querySelector<HTMLInputElement>("#list")
 
-const list: Task[] = JSON.parse(localStorage.getItem('tasks') || '{}')
+const tasks: Task[] = loadTasks()
+tasks.forEach(addTask);
 
-list.forEach(item => {
+function taskSubmit(event: Event) {
+    event.preventDefault()
 
-})
+    if (taskInput?.valye === "" || taskInput?.value === null) return
 
-
-taskApp?.addEventListener('clik', (e) => {
-    //    e.preventDefault();
-
-    if (taskInput?.nodeValue) {
-
-        const task: Task = {
-            title: taskInput.nodeValue,
-            id: Math.random(),
-            dateAdded: Date.now(),
-            order: 0
-        }
-
-        save(task);
+    const newTask: Task = {
+        title: taskInput?.value,
+        id: Math.random(),
+        dateAdded: Date.now(),
+        order: 0,
     }
-})
+
+    tasks.push(newTask)
+
+    saveTasks(tasks)
+
+    addTask(newTask)
+    taskInput.value = ""
+}
+
+taskForm?.addEventListener("submit", taskSubmit)
+
+function addTask(task: Task) {
+    const item = document.createElement("li")
+    const label = document.createElement("label")
+
+    label.append(task.title)
+    item.append(label)
+    taskList?.appendChild(item)
+}
