@@ -1,7 +1,7 @@
-import { loadTasks, saveTasks } from "./repository/saveLoad.js";
+import { loadTasks, saveTasks } from "../repository/localStore.js";
+import { addTask, clearTaskList } from "../service/task.js";
 var taskForm = document.querySelector("#new-task-form");
 var taskInput = document.getElementById("new-task-title");
-var taskList = document.querySelector("#list");
 var tasks = loadTasks();
 tasks.forEach(addTask);
 function taskSubmit(event) {
@@ -12,7 +12,7 @@ function taskSubmit(event) {
         title: taskInput === null || taskInput === void 0 ? void 0 : taskInput.value,
         id: Math.random(),
         dateAdded: Date.now(),
-        order: 0,
+        order: 0
     };
     tasks.push(newTask);
     saveTasks(tasks);
@@ -20,11 +20,9 @@ function taskSubmit(event) {
     taskInput.value = "";
 }
 taskForm === null || taskForm === void 0 ? void 0 : taskForm.addEventListener("submit", taskSubmit);
-function addTask(task) {
-    var item = document.createElement("li");
-    var label = document.createElement("label");
-    label.append(task.title);
-    item.append(label);
-    taskList === null || taskList === void 0 ? void 0 : taskList.appendChild(item);
+function clear(event) {
+    event.preventDefault();
+    clearTaskList();
 }
-//# sourceMappingURL=main.js.map
+taskForm === null || taskForm === void 0 ? void 0 : taskForm.addEventListener("reset", clear);
+//# sourceMappingURL=task.js.map
