@@ -1,5 +1,5 @@
 import { Task } from "./domain/task";
-import { loadTasks, saveTasks } from "./useCases/saveTask/saveLoad.js";
+import { loadTasks, saveTasks } from "./repository/saveLoad.js";
 
 const taskForm = document.querySelector<HTMLUListElement>("#new-task-form")
 const taskInput = document.getElementById("new-task-title") as HTMLFormElement
@@ -10,9 +10,9 @@ tasks.forEach(addTask);
 
 function taskSubmit(event: Event) {
     event.preventDefault()
-
-    if (taskInput?.valye === "" || taskInput?.value === null) return
-
+    
+    if (taskInput?.value.trim() === "" || taskInput?.value === null) return
+    
     const newTask: Task = {
         title: taskInput?.value,
         id: Math.random(),
@@ -21,7 +21,7 @@ function taskSubmit(event: Event) {
     }
 
     tasks.push(newTask)
-
+    
     saveTasks(tasks)
 
     addTask(newTask)

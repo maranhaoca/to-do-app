@@ -1,4 +1,4 @@
-import { Task } from "../../domain/task";
+import { Task } from "../domain/task";
 
 function saveTasks(tasks: Task[]): void {
     localStorage.setItem("tasks", JSON.stringify(tasks))
