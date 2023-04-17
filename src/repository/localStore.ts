@@ -5,11 +5,15 @@ export function saveTasks(tasks: Task[]): void {
 }
 
 export function loadTasks(): Task[] {
-    const taskJson = localStorage.getItem("tasks")
+    const tasks = localStorage.getItem("tasks")
 
-    if (taskJson == null) return []
+    if (tasks == null) return []
 
-    return JSON.parse(taskJson)
+    return JSON.parse(tasks)
+}
+
+function removeTask(task:Task) {
+    
 }
 
 export function removeAllTasks(): void {

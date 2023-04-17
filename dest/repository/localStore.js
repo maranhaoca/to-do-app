@@ -2,10 +2,12 @@ export function saveTasks(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 export function loadTasks() {
-    var taskJson = localStorage.getItem("tasks");
-    if (taskJson == null)
+    var tasks = localStorage.getItem("tasks");
+    if (tasks == null)
         return [];
-    return JSON.parse(taskJson);
+    return JSON.parse(tasks);
+}
+function removeTask(task) {
 }
 export function removeAllTasks() {
     localStorage.setItem("tasks", JSON.stringify([]));
