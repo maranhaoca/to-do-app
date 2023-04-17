@@ -1,7 +1,8 @@
 import { loadTasks, saveTasks } from "../repository/localStore.js";
-import { addTask, clearTaskList } from "../service/task.js";
+import { addTask, clearTaskList, removeTask } from "../service/task.js";
 var taskForm = document.querySelector("#new-task-form");
 var taskInput = document.getElementById("new-task-title");
+var taskList = document.querySelector("#list");
 var tasks = loadTasks();
 tasks.forEach(addTask);
 function taskSubmit(event) {
@@ -10,7 +11,7 @@ function taskSubmit(event) {
         return;
     var newTask = {
         title: taskInput === null || taskInput === void 0 ? void 0 : taskInput.value,
-        id: Math.random(),
+        id: Math.ceil(Math.random() * 1000),
         dateAdded: Date.now(),
         order: 0
     };
@@ -20,6 +21,12 @@ function taskSubmit(event) {
     taskInput.value = "";
 }
 taskForm === null || taskForm === void 0 ? void 0 : taskForm.addEventListener("submit", taskSubmit);
+export function remove(event) {
+    var _a;
+    event.preventDefault();
+    var taskId = (_a = event.currentTarget) === null || _a === void 0 ? void 0 : _a.id;
+    removeTask(taskId);
+}
 function clear(event) {
     event.preventDefault();
     clearTaskList();

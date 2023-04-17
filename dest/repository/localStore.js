@@ -7,7 +7,14 @@ export function loadTasks() {
         return [];
     return JSON.parse(tasks);
 }
-function removeTask(task) {
+export function removeTaskStore(taskId) {
+    var tasks = localStorage === null || localStorage === void 0 ? void 0 : localStorage.getItem("tasks");
+    if (!tasks) {
+        return;
+    }
+    var jsonTasks = JSON.parse(tasks);
+    jsonTasks = jsonTasks.filter(function (element) { return element.id != taskId; });
+    localStorage.setItem("tasks", JSON.stringify(jsonTasks));
 }
 export function removeAllTasks() {
     localStorage.setItem("tasks", JSON.stringify([]));

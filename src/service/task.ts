@@ -1,5 +1,6 @@
+import { remove } from "../controller/task.js"
 import { Task } from "../domain/task.js"
-import { removeAllTasks } from "../repository/localStore.js"
+import { removeAllTasks, removeTaskStore } from "../repository/localStore.js"
 
 let taskList = document.querySelector<HTMLInputElement>("#list")
 
@@ -15,10 +16,18 @@ export function addTask(task: Task) {
 
     item.append(label)
     item.append(deleteButton)
+    item.id = task.id.toString()
+    item?.addEventListener("click", remove)
 
     taskList?.appendChild(item)
+}
 
-    console.log(localStorage.getItem("tasks"))
+export function removeTask(taskId: number) {
+    let task = document.getElementById(taskId.toString()) as HTMLLIElement
+
+    task.remove()
+
+    removeTaskStore(taskId)
 }
 
 export function clearTaskList() {

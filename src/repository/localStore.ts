@@ -12,8 +12,17 @@ export function loadTasks(): Task[] {
     return JSON.parse(tasks)
 }
 
-function removeTask(task:Task) {
-    
+export function removeTaskStore(taskId: number) {
+    const tasks: string | null = localStorage?.getItem("tasks")
+
+    if (!tasks) {
+        return
+    }
+
+    let jsonTasks: Task[] = JSON.parse(tasks)
+    jsonTasks = jsonTasks.filter(element => element.id != taskId)
+
+    localStorage.setItem("tasks", JSON.stringify(jsonTasks))
 }
 
 export function removeAllTasks(): void {
